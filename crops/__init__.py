@@ -52,9 +52,9 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['GET'])
 def data():
-    temp = request.args['temp']
-    mois = request.args['mois']
-    hum = request.args['hum']
+    temp = float(request.args['temp'])
+    mois = float(request.args['mois'])
+    hum = float(request.args['hum'])
     data = getData(temp,mois,hum)
     return jsonify(data)
 
