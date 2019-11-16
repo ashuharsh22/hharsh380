@@ -2,16 +2,12 @@ import xlrd
 from flask import Flask, request, jsonify
 import requests 
 import os
-def getDtata()
+def getDtata(temp_reading,mois_reading,hum_reading)
     currDir = os.path.dirname(__file__)
     loc=(os.path.join(currDir,"Book1.xlsx"))
     wb = xlrd.open_workbook(loc) 
     sheet = wb.sheet_by_index(0) 
     sheet.cell_value(0, 0) 
-    temp_reading=float(input("Enter Temperature: "))
-    mois_reading=float(input("Enter Moisture: "))
-    hum_reading=float(input("Enter Humidity: "))
-    print()
     temp_dev=[]
     mois_dev=[]
     hum_dev=[]
@@ -56,7 +52,10 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['GET'])
 def data():
-    data = getData()
+    temp = request.args['temp']
+    mois = request.args['mois']
+    hum = request.args['hum']
+    data = getData(temp,mois,hum)
     return jsonify(data)
 
 
