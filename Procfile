@@ -1,1 +1,1 @@
-web: gunicorn webkiosk:app --log-file=-
+web: gunicorn crops:app --log-file=-
