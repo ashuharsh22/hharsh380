@@ -2,7 +2,7 @@ import xlrd
 from flask import Flask, request, jsonify
 import requests 
 import os
-def getDtata(temp_reading,mois_reading,hum_reading):
+def getData(temp_reading,mois_reading,hum_reading):
     currDir = os.path.dirname(__file__)
     loc=(os.path.join(currDir,"Book1.xlsx"))
     wb = xlrd.open_workbook(loc) 
