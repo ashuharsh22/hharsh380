@@ -2,7 +2,11 @@ import xlrd
 from flask import Flask, request, jsonify
 import requests 
 import os
-def getData(temp_reading,mois_reading,hum_reading):
+from urllib.request import urlopen
+import json
+import time
+
+def getData():
     currDir = os.path.dirname(__file__)
     loc=(os.path.join(currDir,"Book1.xlsx"))
     wb = xlrd.open_workbook(loc) 
@@ -13,6 +17,26 @@ def getData(temp_reading,mois_reading,hum_reading):
     hum_dev=[]
     sum_dev={}
     c=0
+    READ_API_KEY='M5VISQCBDFUWUTBC'
+    CHANNEL_ID= '917454'
+    TS = urlopen("http://api.thingspeak.com/channels/%s/feeds/last.json?api_key=%s" \
+                       % (CHANNEL_ID,READ_API_KEY))
+
+    response = TS.read()
+    data=json.loads(response)
+
+
+    a = data['created_at']
+    b = data['field1']
+    c = data['field2']
+    d = data['field3']
+    print (a + "    " + b + "    " + c + "    " + d)
+    temp_reading = float(b)
+    mois_reading = float(d)
+    hum_reading = float(c)
+    time.sleep(5)   
+
+    TS.close()
     for i in range(1,sheet.nrows): 
         crop_string=sheet.cell_value(i,0)
         
@@ -52,10 +76,5 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['GET'])
 def data():
-    temp = float(request.args['temp'])
-    mois = float(request.args['mois'])
-    hum = float(request.args['hum'])
-    data = getData(temp,mois,hum)
+    data = getData()
     return jsonify(data)
-
-
