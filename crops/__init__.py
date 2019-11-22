@@ -28,12 +28,12 @@ def getData():
 
     a = data['created_at']
     b = data['field1']
-    c = data['field2']
+    cc = data['field2']
     d = data['field3']
-    print (a + "    " + b + "    " + c + "    " + d)
+    print (a + "    " + b + "    " + cc + "    " + d)
     temp_reading = float(b)
     mois_reading = float(d)
-    hum_reading = float(c)
+    hum_reading = float(cc)
     time.sleep(5)   
 
     TS.close()
