@@ -75,10 +75,33 @@ def getData():
 app = Flask(__name__) 
 
 
+def getData_p():
+
+    READ_API_KEY='M5VISQCBDFUWUTBC'
+    CHANNEL_ID= '917454'
+    TS = urlopen("http://api.thingspeak.com/channels/%s/feeds/last.json?api_key=%s" \
+                       % (CHANNEL_ID,READ_API_KEY))
+
+    response = TS.read()
+    data=json.loads(response)
+
+    readings=[]
+    b = data['field1']
+    cc = data['field2']
+    d = data['field3']
+    readings.append(b)
+    readings.append(cc)
+    readings.append(d)
+    json_data = {"data": readings}
+    return json_data
+    
 
 @app.route('/', methods = ['GET'])
 def data():
     data = getData()
     return jsonify(data)
   
-
+@app.route('/present', methods = ['GET'])
+def data1():
+    data = getData_p()
+    return jsonify(data)
