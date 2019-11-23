@@ -106,12 +106,10 @@ def getData_c(crop_name):
     for i in range(1,sheet.nrows): 
         crop_string=sheet.cell_value(i,0)
         if(crop_name==crop_string):
-          a=sheet.cell_value(i,1)
-          b=sheet.cell_value(i,3)
-          c=sheet.cell_value(i,2)
-    readings.append(a)
-    readings.append(b)
-    readings.append(c)
+          mois_string=sheet.cell_value(i, 2)
+    mois_lower,mois_upper=map(float,mois_string.split('-'))
+    readings.append(mois_lower)
+    readings.append(mois_upper)
     json_data = {"data": readings}
     return json_data
 
@@ -125,8 +123,8 @@ def data1():
     data = getData_p()
     return jsonify(data)
 
-@app.route('/crop', methods = ['GET'])
+@app.route('/crops_user', methods = ['GET'])
 def data2():
-    crop=str(request.args['crop'])
-    data = getData_c(crop)
+    crop_name=str(request.args['crop'])
+    data = getData_c(crop_name)
     return jsonify(data)
