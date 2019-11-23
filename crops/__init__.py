@@ -113,7 +113,7 @@ def getData_c(crop_name):
     json_data = {"data": readings}
     return json_data
 
-@app.route('/', methods = ['GET'])
+@app.route('/suggest', methods = ['GET'])
 def data():
     data = getData()
     return jsonify(data)
@@ -123,8 +123,8 @@ def data1():
     data = getData_p()
     return jsonify(data)
 
-@app.route('/crops_user', methods = ['GET'])
+@app.route('/', methods = ['GET'])
 def data2():
-    crop_name=str(request.args['crop'])
-    data = getData_c(crop_name)
+    crop=str(request.args['crop'])
+    data = getData_c(crop)
     return jsonify(data)
