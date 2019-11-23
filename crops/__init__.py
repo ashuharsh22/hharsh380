@@ -107,9 +107,7 @@ def getData_c(crop_name):
         if(crop_name==crop_string):
           mois_string=sheet.cell_value(i, 2)
     mois_lower,mois_upper=map(float,mois_string.split('-'))
-    f= open("moisture.txt","w+")
-    f.write(mois_lower)
-    f.close()
+    
     json_data = {"data":mois_lower}
     return json_data
 
