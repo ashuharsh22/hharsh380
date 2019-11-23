@@ -125,8 +125,8 @@ def data1():
     data = getData_p()
     return jsonify(data)
 
-@app.route('/crops_user', methods = ['GET'])
+@app.route('/crop', methods = ['GET'])
 def data2():
-    crop_name=request.args['crop']
-    data = getData_c(crop_name)
+    crop=str(request.args['crop'])
+    data = getData_c(crop)
     return jsonify(data)
