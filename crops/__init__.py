@@ -94,7 +94,26 @@ def getData_p():
     readings.append(d)
     json_data = {"data": readings}
     return json_data
-    
+
+def getData_c(crop_name):
+
+    currDir = os.path.dirname(__file__)
+    loc=(os.path.join(currDir,"Book1.xlsx"))
+    wb = xlrd.open_workbook(loc) 
+    sheet = wb.sheet_by_index(0) 
+    sheet.cell_value(0, 0)
+    readings=[]
+    for i in range(1,sheet.nrows): 
+        crop_string=sheet.cell_value(i,0)
+        if(crop_name==crop_string):
+          a=sheet.cell_value(i,1)
+          b=sheet.cell_value(i,3)
+          c=sheet.cell_value(i,2)
+    readings.append(a)
+    readings.append(b)
+    readings.append(c)
+    json_data = {"data": readings}
+    return json_data
 
 @app.route('/', methods = ['GET'])
 def data():
@@ -104,4 +123,10 @@ def data():
 @app.route('/present', methods = ['GET'])
 def data1():
     data = getData_p()
+    return jsonify(data)
+
+@app.route('/crops_user', methods = ['GET'])
+def data2():
+    crop_name=request.args['crop']
+    data = getData_c(crop_name)
     return jsonify(data)
