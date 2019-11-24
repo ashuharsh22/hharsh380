@@ -122,7 +122,8 @@ def getData_c(crop_name):
         if(crop_name==crop_string):
           mois_string=sheet.cell_value(i, 2)
     mois_lower,mois_upper=map(float,mois_string.split('-'))
-    write_ts(mois_lower)
+    while True:
+      write_ts(mois_lower)
     json_data = {"data":mois_lower}
     return json_data
 
