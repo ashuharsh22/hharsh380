@@ -78,15 +78,12 @@ app = Flask(__name__)
 
 
 def getData_p():
-
     READ_API_KEY='M5VISQCBDFUWUTBC'
     CHANNEL_ID= '917454'
     TS = urlopen("http://api.thingspeak.com/channels/%s/feeds/last.json?api_key=%s" \
                        % (CHANNEL_ID,READ_API_KEY))
-
     response = TS.read()
     data=json.loads(response)
-
     readings=[]
     b = data['field1']
     cc = data['field2']
@@ -111,7 +108,6 @@ def write_ts(threshold):
     print ("connection failed")
     
 def getData_c(crop_name):
-
     currDir = os.path.dirname(__file__)
     loc=(os.path.join(currDir,"Book1.xlsx"))
     wb = xlrd.open_workbook(loc) 
