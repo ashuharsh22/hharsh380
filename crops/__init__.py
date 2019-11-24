@@ -1,5 +1,7 @@
 import xlrd
 from flask import Flask, request, jsonify
+import http.client
+import urllib.parse
 import requests 
 import os
 from urllib.request import urlopen
@@ -95,6 +97,19 @@ def getData_p():
     json_data = {"data": readings}
     return json_data
 
+def write_ts(threshold):
+  key = "6QDH75XFDQ7X4XFI" 
+  params = urllib.parse.urlencode({'field4': threshold, 'key':key }) 
+  headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
+  conn = http.client.HTTPConnection("api.thingspeak.com:80")
+  try:
+    conn.request("POST", "/update", params, headers)
+    response = conn.getresponse()
+    data = response.read()
+    conn.close()
+  except:
+    print ("connection failed")
+    
 def getData_c(crop_name):
 
     currDir = os.path.dirname(__file__)
@@ -107,7 +122,7 @@ def getData_c(crop_name):
         if(crop_name==crop_string):
           mois_string=sheet.cell_value(i, 2)
     mois_lower,mois_upper=map(float,mois_string.split('-'))
-    
+    write_ts(mois_lower)
     json_data = {"data":mois_lower}
     return json_data
 
