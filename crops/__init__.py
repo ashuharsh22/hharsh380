@@ -140,6 +140,6 @@ def data1():
 
 @app.route('/', methods = ['GET'])
 def data2():
-    crop=str(request.args['crop'])
+    crop=str(request.args.params['crop'])
     data = getData_c(crop)
     return jsonify(data)
