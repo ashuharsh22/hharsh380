@@ -10,7 +10,7 @@ import time
 
 def getData():
     currDir = os.path.dirname(__file__)
-    loc=(os.path.join(currDir,"Book1.xlsx"))
+    loc=(os.path.join(currDir,"Book.xlsx"))
     wb = xlrd.open_workbook(loc) 
     sheet = wb.sheet_by_index(0) 
     sheet.cell_value(0, 0) 
